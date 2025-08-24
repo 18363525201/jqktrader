@@ -575,7 +575,7 @@ class ClientTrader(IClientTrader):
                 title = self._get_pop_dialog_title()
             except pywinauto.findwindows.ElementNotFoundError:
                 return {"message": "success"}
-
+            #添加输入的价格若不为3个小数点则强制点击
             result = handler.handle(title)
             if result:
                 return result
