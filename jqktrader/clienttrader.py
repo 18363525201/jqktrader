@@ -576,6 +576,22 @@ class ClientTrader(IClientTrader):
             except pywinauto.findwindows.ElementNotFoundError:
                 return {"message": "success"}
             #添加输入的价格若不为3个小数点则强制点击
+             # ===== 新增：处理小数点弹窗 =====
+            if "委托价格的小数部分应为" in title:
+                w = self._app.top_window()
+                if w is not None:
+                    # 尝试点击“是”或“确定”
+                    try:
+                        btn = w["是(Y)"]  # 同花顺常用按钮名
+                        btn.click()
+                    except Exception:
+                        try:
+                            btn = w["确定"]
+                            btn.click()
+                        except Exception:
+                            logging.warning(f"找不到点击按钮处理弹窗: {title}")
+                    self.wait(0.2)
+                    continue  # 弹窗处理完，继续检测下一个
             result = handler.handle(title)
             if result:
                 return result
