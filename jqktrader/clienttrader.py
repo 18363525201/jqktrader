@@ -465,7 +465,7 @@ class ClientTrader(IClientTrader):
         if security.lower().startswith("sh"):
             self._set_stock_exchange_type("上海Ａ股")
 
-        self.wait(0.1)
+        self.wait(0.5)
 
         self._type_edit_control_keys(
             self._config.TRADE_PRICE_CONTROL_ID,
